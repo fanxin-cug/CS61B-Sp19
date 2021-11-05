@@ -31,6 +31,7 @@ public class IntList {
     public IntList() {
     /* NOTE: public IntList () { }  would also work. */
         this(0, null);
+
     }
 
     /**
@@ -82,7 +83,12 @@ public class IntList {
 
     public static IntList dcatenate(IntList A, IntList B) {
         //TODO:  fill in method
-        return null;
+        if(A==null){
+            A=B;
+            return A;
+        }
+        A.rest=dcatenate(A.rest,B);
+        return A;
     }
 
     /**
@@ -91,7 +97,21 @@ public class IntList {
      */
     public static IntList catenate(IntList A, IntList B) {
         //TODO:  fill in method
-        return null;
+        if(A==null){
+            if(B==null){
+                return null;
+            }
+            IntList res=new IntList(B.first,null);
+            IntList ptr=res;
+            B=B.rest;
+            while(B!=null){
+                ptr.rest=new IntList(B.first,null);
+                ptr=ptr.rest;
+                B=B.rest;
+            }
+            return res;
+        }
+        return new IntList(A.first,catenate(A.rest,B));
     }
 
 
