@@ -50,10 +50,12 @@ public class StdDrawDemo {
 
 		int waitTimeMilliseconds = 100;
 
+		StdDraw.setScale(-100, 100);
+
 		/* Stamp 100 additional pictures in random locations,
 		 * each one coming slightly faster than the one before. */
 		int count = 0;
-		while (count < 200) {
+		while (count < 100) {
 			/* picks random x and y between -90 and 90 */
 			double x = StdRandom.uniform(-90, 90);
 			double y = StdRandom.uniform(-90, 90);
@@ -67,7 +69,7 @@ public class StdDrawDemo {
 			/* Reduce wait time for each thing drawn, but
 			 * never wait less than 10 milliseconds. */
 			waitTimeMilliseconds = waitTimeMilliseconds - 1;
-			if (waitTimeMilliseconds < 1) {
+			if (waitTimeMilliseconds < 10) {
 				waitTimeMilliseconds = 10;
 			}
 
@@ -85,6 +87,8 @@ public class StdDrawDemo {
 		  * offscreen canvas to the onscreen canvas, where it is displayed
 		  * in the standard drawing window. */
 		StdDraw.enableDoubleBuffering();
+
+		StdDraw.setScale(-500, 500);
 
 		double size = 100;
 		while (size < 500) {
@@ -107,8 +111,8 @@ public class StdDrawDemo {
 	public static void main(String[] args) {
 		/** Try commenting out some of these calls and
 		* notice the differences. */
-		drawThree();
+		//drawThree();
 		//drawRandom();
-		//drawZoom();
+		drawZoom();
 	}
 }
