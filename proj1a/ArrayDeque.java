@@ -136,13 +136,14 @@ public class ArrayDeque<T> {
             return null;
         }
         front = plusOne(front);
+        T res = items[front]; //fix bug
         size -= 1;
         if(size*4 == items.length && items.length>8) {
             int first=plusOne(front);
             int last=minusOne(tail);
             shrink(first, last);
         }
-        return items[front];
+        return res;
     }
 
     public T removeLast() {
@@ -150,13 +151,14 @@ public class ArrayDeque<T> {
             return null;
         }
         tail = minusOne(tail);
+        T res = items[tail]; //fix bug
         size -= 1;
         if(size*4 == items.length && items.length>8) {
             int first=plusOne(front);
             int last=minusOne(tail);
             shrink(first, last);
         }
-        return items[tail];
+        return res;
     }
 
     public T get(int index) {
