@@ -5,6 +5,8 @@ import huglife.Direction;
 import huglife.Action;
 import huglife.Occupant;
 
+import huglife.HugLifeUtils;
+
 import java.awt.Color;
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -29,6 +31,8 @@ public class Plip extends Creature {
      * blue color.
      */
     private int b;
+
+    private double moveProbability = 0.5;
 
     /**
      * creates plip with energy equal to E.
@@ -57,7 +61,9 @@ public class Plip extends Creature {
      * that you get this exactly correct.
      */
     public Color color() {
-        g = 63;
+        r = 99;
+        b = 76;
+        g = (int) (96*energy+63);
         return color(r, g, b);
     }
 
@@ -75,6 +81,10 @@ public class Plip extends Creature {
      */
     public void move() {
         // TODO
+        energy -= 0.15;
+        if(energy<0) {
+            energy = 0;
+        }
     }
 
 
@@ -83,6 +93,10 @@ public class Plip extends Creature {
      */
     public void stay() {
         // TODO
+        energy += 0.2;
+        if(energy>2) {
+            energy = 2;
+        }
     }
 
     /**
@@ -91,7 +105,9 @@ public class Plip extends Creature {
      * Plip.
      */
     public Plip replicate() {
-        return this;
+        energy = 0.5 * energy;
+        Plip babyPlip=new Plip(energy);
+        return babyPlip;
     }
 
     /**
@@ -114,16 +130,38 @@ public class Plip extends Creature {
         // TODO
         // (Google: Enhanced for-loop over keys of NEIGHBORS?)
         // for () {...}
+        for(Direction d:neighbors.keySet()){
+            if(neighbors.get(d).name().equals("empty")){
+                emptyNeighbors.addLast(d);
+            }
+        }
 
-        if (false) { // FIXME
+        if (emptyNeighbors.isEmpty()) { // FIXME
             // TODO
+            return new Action(Action.ActionType.STAY);
         }
 
         // Rule 2
         // HINT: randomEntry(emptyNeighbors)
+        if(energy>=1.0){
+            Direction d=HugLifeUtils.randomEntry(emptyNeighbors);
+            return new Action(Action.ActionType.REPLICATE, d);
+        }
 
         // Rule 3
-
+        Deque<Direction> clorusNeighbors = new ArrayDeque<>();
+        for(Direction d:neighbors.keySet()){
+            if(neighbors.get(d).name().equals("clorus")){
+                clorusNeighbors.addLast(d);
+            }
+        }
+        if(!clorusNeighbors.isEmpty()){
+            anyClorus=true;
+        }
+        if(!emptyNeighbors.isEmpty() && anyClorus && Math.random() < moveProbability){
+            Direction d=HugLifeUtils.randomEntry(emptyNeighbors);
+            return new Action(Action.ActionType.MOVE, d);
+        }
         // Rule 4
         return new Action(Action.ActionType.STAY);
     }
