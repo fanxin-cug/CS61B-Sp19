@@ -108,8 +108,8 @@ public class IntList {
     public static IntList dcatenate(IntList A, IntList B) {
         //TODO:  fill in method
         if (A == null) {
-            A = B;
-            return A;
+            //A = B;
+            return B;
         }
         A.rest = dcatenate(A.rest, B);
         return A;
@@ -136,6 +136,19 @@ public class IntList {
             return res;
         }
         return new IntList(A.first, catenate(A.rest, B));
+        /*
+        if (A == null) {
+            return B;
+        }
+        IntList res = A;
+        return new IntList(res.first, catenate(res.rest, B));
+        */
+    }
+
+    public static void main(String[] args) {
+        IntList A = IntList.of(1, 2, 3);
+        IntList B = IntList.of(4, 5, 6);
+        IntList C = IntList.dcatenate(A, B);
     }
 
 
