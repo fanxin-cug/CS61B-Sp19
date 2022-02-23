@@ -8,4 +8,4 @@ https://sp19.datastructur.es/
 https://www.bilibili.com/video/BV1EJ411n72e
 
 ## TODO
-Proj 2C:Bear Maps & Proj3 BYOW
+Proj 2C:Bear Maps & Proj3:BYOW
